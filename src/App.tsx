@@ -1,24 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  // non-state
+  // const variable = 10;
+
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    // this code will excute whe counter changes
+    console.log('COUNTER CHANGED', counter);
+  }, [counter]);
+
+  const handleAdd = () => {
+    // console.log('HANDLE ADD CLICKED');
+    let newCounter = counter;
+    newCounter = newCounter * 10;
+    setCounter(newCounter);
+  };
+
+  const handleSubtract = () => {
+    // console.log('HANDLE SUBTRACT CLICKED');
+    setCounter(counter - 1);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{counter}</h1>
+      <button onClick={handleAdd}>Add +</button>
+      <button onClick={handleSubtract}>Subtract -</button>
     </div>
   );
 }

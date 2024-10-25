@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -6,13 +6,28 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  Icon,
   Input,
   Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { TbLogin2 } from "react-icons/tb";
+import { useAuth } from "store";
 
-export default function RegisterPage() {
+export function LoginPage() {
+  const navigate = useNavigate();
+  const { setSession } = useAuth();
+
+  function login() {
+    setSession({
+      username: "Tony Stark",
+      // role: "USER",
+      role: "ADMIN",
+    });
+    navigate("/app");
+  }
+
   return (
     <Box
       background="white"
@@ -23,9 +38,9 @@ export default function RegisterPage() {
       paddingY="10"
     >
       <VStack>
-        <Heading size="md">Create your account</Heading>
+        <Heading size="md">Welcome Back!</Heading>
         <Text color="subtle" marginBottom="4" fontSize="sm">
-          Please enter your details
+          Enter details to login
         </Text>
 
         <FormControl isInvalid={false} marginBottom="2">
@@ -40,20 +55,25 @@ export default function RegisterPage() {
           <FormErrorMessage>Password is required.</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={false} marginBottom="4">
-          <FormLabel fontSize="sm">Confirm Password</FormLabel>
-          <Input type="password" />
-          <FormErrorMessage>Password is required.</FormErrorMessage>
-        </FormControl>
-
-        <Button colorScheme="blue" width="full" marginBottom="1">
-          Register
+        <Button
+          colorScheme="brand"
+          width="full"
+          marginBottom="1"
+          onClick={login}
+        >
+          <Icon as={TbLogin2} marginRight="1" />
+          Login
         </Button>
 
         <Text fontSize="sm">
-          Already have an account?
-          <Link marginLeft="1" color="brand" as={RouterLink} to="/auth/login">
-            Login
+          New user?
+          <Link
+            marginLeft="1"
+            color="brand"
+            as={RouterLink}
+            to="/auth/register"
+          >
+            Register
           </Link>
         </Text>
       </VStack>

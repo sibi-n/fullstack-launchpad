@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
+import { Nav } from "components/shared";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Nav from "../shared/Nav";
 
-export default function AppLayout() {
+export function AppLayout({ children }: React.PropsWithChildren) {
   return (
     <Box marginBottom="12">
       <Nav />

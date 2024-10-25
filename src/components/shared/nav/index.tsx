@@ -1,9 +1,10 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
   Heading,
   HStack,
+  Icon,
   Image,
   Link,
   Menu,
@@ -11,11 +12,20 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import logo from "../../assets/logo.png";
+import { TbLogout2 } from "react-icons/tb";
+import { useAuth } from "store";
 
-export default function Nav() {
+export function Nav() {
+  const navigate = useNavigate();
+  const { user, removeSession } = useAuth();
+
+  function logout() {
+    removeSession();
+    navigate("/auth/login");
+  }
+
   return (
-    <Box padding="3" borderBottom="1px" borderColor="gray.100">
+    <Box padding="3" borderBottom="1px">
       <HStack
         maxWidth="4xl"
         height="full"
@@ -27,7 +37,7 @@ export default function Nav() {
             height="10"
             width="10"
             rounded="md"
-            src={logo}
+            src="/logo.png"
             alt="RailEase Logo"
           />
 
@@ -54,13 +64,11 @@ export default function Nav() {
 
         <Menu placement="top-end">
           <MenuButton>
-            <Avatar size="md" name={"John Doe"} />
+            <Avatar size="md" name={user?.username} />
           </MenuButton>
           <MenuList>
-            <MenuItem as="a" href="#">
-              Profile
-            </MenuItem>
-            <MenuItem as="a" href="#">
+            <MenuItem as="a" href="#" onClick={logout}>
+              <Icon marginRight="2" as={TbLogout2} />
               Logout
             </MenuItem>
           </MenuList>

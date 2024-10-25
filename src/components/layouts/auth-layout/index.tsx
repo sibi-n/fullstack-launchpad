@@ -1,8 +1,18 @@
 import { Center, Heading, HStack, Image, VStack } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "store";
 
-export function AuthLayout() {
+export function AuthLayout({ children }: React.PropsWithChildren) {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/app");
+    }
+  }, [user]);
+
   return (
     <Center minHeight="100dvh" background="gray.100">
       <VStack>
@@ -11,7 +21,7 @@ export function AuthLayout() {
             height="10"
             width="10"
             rounded="md"
-            src={logo}
+            src="/logo.png"
             alt="RailEase Logo"
           />
 
@@ -25,5 +35,3 @@ export function AuthLayout() {
     </Center>
   );
 }
-
-export default AuthLayout;

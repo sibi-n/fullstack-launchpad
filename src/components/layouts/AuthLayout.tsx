@@ -1,6 +1,6 @@
 import { Center, Heading, HStack, Image, VStack } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import logo from '../../assets/logo.png';
+import logo from "../../assets/logo.png";
 
 export function AuthLayout() {
   return (
@@ -12,9 +12,10 @@ export function AuthLayout() {
             width="10"
             rounded="md"
             src={logo}
+            alt="RailEase Logo"
           />
 
-          <Heading size="lg" marginLeft="1">
+          <Heading as="h1" size="lg" marginLeft="1">
             RailEase
           </Heading>
         </HStack>

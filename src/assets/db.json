@@ -1,0 +1,114 @@
+{
+    "trains": [
+        {
+            "id": "818272",
+            "name": "Kovai Express",
+            "destination": "Coimbatore",
+            "source": "Chennai",
+            "startTime": "1:00PM",
+            "endTime": "4:00AM",
+            "totalSeats": 120,
+            "availableSeats": 43,
+            "ticketPrice": 640
+        },
+        {
+            "id": "923384",
+            "name": "Nagercoil Express",
+            "destination": "Nagercoil",
+            "source": "Chennai",
+            "startTime": "6:30AM",
+            "endTime": "9:45PM",
+            "totalSeats": 150,
+            "availableSeats": 20,
+            "ticketPrice": 780
+        },
+        {
+            "id": "172839",
+            "name": "Bangalore Mail",
+            "destination": "Bangalore",
+            "source": "Chennai",
+            "startTime": "10:00PM",
+            "endTime": "5:00AM",
+            "totalSeats": 200,
+            "availableSeats": 120,
+            "ticketPrice": 900
+        },
+        {
+            "id": "567839",
+            "name": "Hyderabad Express",
+            "destination": "Hyderabad",
+            "source": "Bangalore",
+            "startTime": "5:15PM",
+            "endTime": "7:30AM",
+            "totalSeats": 180,
+            "availableSeats": 75,
+            "ticketPrice": 850
+        },
+        {
+            "id": "374920",
+            "name": "Madurai Express",
+            "destination": "Madurai",
+            "source": "Chennai",
+            "startTime": "8:00PM",
+            "endTime": "6:00AM",
+            "totalSeats": 140,
+            "availableSeats": 50,
+            "ticketPrice": 700
+        },
+        {
+            "id": "482731",
+            "name": "Mysore Express",
+            "destination": "Mysore",
+            "source": "Bangalore",
+            "startTime": "7:30AM",
+            "endTime": "11:00AM",
+            "totalSeats": 100,
+            "availableSeats": 30,
+            "ticketPrice": 400
+        },
+        {
+            "id": "938271",
+            "name": "Shatabdi Express",
+            "destination": "Delhi",
+            "source": "Amritsar",
+            "startTime": "5:00AM",
+            "endTime": "11:30AM",
+            "totalSeats": 250,
+            "availableSeats": 100,
+            "ticketPrice": 1200
+        },
+        {
+            "id": "628374",
+            "name": "Duronto Express",
+            "destination": "Mumbai",
+            "source": "Kolkata",
+            "startTime": "8:00PM",
+            "endTime": "10:00AM",
+            "totalSeats": 220,
+            "availableSeats": 130,
+            "ticketPrice": 1800
+        },
+        {
+            "id": "481930",
+            "name": "Gujarat Mail",
+            "destination": "Ahmedabad",
+            "source": "Mumbai",
+            "startTime": "10:00PM",
+            "endTime": "6:30AM",
+            "totalSeats": 180,
+            "availableSeats": 55,
+            "ticketPrice": 650
+        },
+        {
+            "id": "394857",
+            "name": "Rajdhani Express",
+            "destination": "Delhi",
+            "source": "Mumbai",
+            "startTime": "2:00PM",
+            "endTime": "8:00AM",
+            "totalSeats": 300,
+            "availableSeats": 150,
+            "ticketPrice": 2500
+        }
+    ]
+}

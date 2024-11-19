@@ -2,8 +2,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 interface UserInfo {
   username: string;
+  userId: number;
   role: "ADMIN" | "USER";
   isAdmin: boolean;
+  token: string;
 }
 
 interface AuthInfo {
@@ -23,10 +25,13 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   function setSession(e: Omit<UserInfo, "isAdmin">) {
     setUser({ ...e, isAdmin: e.role === "ADMIN" });
     localStorage.setItem("user", JSON.stringify(e));
+    localStorage.setItem("token", e.token);
   }
 
   function removeSession() {
     setUser(undefined);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   }
 
   useEffect(() => {

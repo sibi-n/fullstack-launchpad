@@ -46,21 +46,24 @@ export function Nav() {
           </Heading>
         </HStack>
 
-        <HStack spacing="10">
-          <Link as={RouterLink} fontWeight="medium" children="Home" to="/" />
-          <Link
-            as={RouterLink}
-            fontWeight="medium"
-            children="Search"
-            to="search"
-          />
-          <Link
-            as={RouterLink}
-            fontWeight="medium"
-            children="Booking History"
-            to="history"
-          />
-        </HStack>
+        {!user?.isAdmin && (
+          <HStack spacing="10">
+            <Link as={RouterLink} fontWeight="medium" children="Home" to="/" />
+            <Link
+              as={RouterLink}
+              fontWeight="medium"
+              children="Search"
+              to="search"
+            />
+
+            <Link
+              as={RouterLink}
+              fontWeight="medium"
+              children="Booking History"
+              to="history"
+            />
+          </HStack>
+        )}
 
         <Menu placement="top-end">
           <MenuButton>

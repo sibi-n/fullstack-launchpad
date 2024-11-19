@@ -10,22 +10,70 @@ import {
   Input,
   Link,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { TbLogin2 } from "react-icons/tb";
 import { useAuth } from "store";
+import { login } from "api";
+import React, { useState } from "react";
 
 export function LoginPage() {
+  const toast = useToast();
   const navigate = useNavigate();
   const { setSession } = useAuth();
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState<{
+    username?: string;
+    password?: string;
+  }>({ username: "", password: "" });
 
-  function login() {
-    setSession({
-      username: "Tony Stark",
-      // role: "USER",
-      role: "ADMIN",
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    setSubmitted(true);
+
+    const formData = new FormData(e.currentTarget);
+
+    const username = formData.get("username")?.toString();
+    const password = formData.get("password")?.toString();
+
+    setFormData({
+      username,
+      password,
     });
-    navigate("/app");
+
+    if (!username || !password) return;
+
+    const response = await login({ username, password });
+    if (response.error && response.status === 401) {
+      toast({
+        title: "Invalid credentials",
+        status: "error",
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (response.status !== 200) {
+      toast({
+        title: "Server error",
+        status: "error",
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (response.data) {
+      setSession({
+        username,
+        role: response.data.role,
+        token: response.data.accessToken,
+        userId: response.data.userId,
+      });
+
+      navigate("/app");
+    }
   }
 
   return (
@@ -43,27 +91,35 @@ export function LoginPage() {
           Enter details to login
         </Text>
 
-        <FormControl isInvalid={false} marginBottom="2">
-          <FormLabel fontSize="sm">Username</FormLabel>
-          <Input type="text" />
-          <FormErrorMessage>Username is required.</FormErrorMessage>
-        </FormControl>
+        <Box as="form" w="full" onSubmit={onSubmit}>
+          <FormControl
+            isInvalid={submitted && !formData?.username}
+            marginBottom="2"
+          >
+            <FormLabel fontSize="sm">Username</FormLabel>
+            <Input type="text" name="username" />
+            <FormErrorMessage>Username is required.</FormErrorMessage>
+          </FormControl>
 
-        <FormControl isInvalid={false} marginBottom="4">
-          <FormLabel fontSize="sm">Password</FormLabel>
-          <Input type="password" />
-          <FormErrorMessage>Password is required.</FormErrorMessage>
-        </FormControl>
+          <FormControl
+            isInvalid={submitted && !formData?.password}
+            marginBottom="4"
+          >
+            <FormLabel fontSize="sm">Password</FormLabel>
+            <Input type="password" name="password" />
+            <FormErrorMessage>Password is required.</FormErrorMessage>
+          </FormControl>
 
-        <Button
-          colorScheme="brand"
-          width="full"
-          marginBottom="1"
-          onClick={login}
-        >
-          <Icon as={TbLogin2} marginRight="1" />
-          Login
-        </Button>
+          <Button
+            colorScheme="brand"
+            width="full"
+            marginBottom="1"
+            type="submit"
+          >
+            <Icon as={TbLogin2} marginRight="1" />
+            Login
+          </Button>
+        </Box>
 
         <Text fontSize="sm">
           New user?

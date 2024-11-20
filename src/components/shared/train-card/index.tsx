@@ -8,19 +8,21 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useMemo } from "react";
+import { DateTimeUtil } from "utils/date.util";
 
 interface TrainCardProps {
-  id: string;
+  id?: number;
   name: string;
   destination: string;
   source: string;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
   totalSeats: number;
-  availableSeats: number;
-  ticketPrice: number;
+  availableSeats?: number;
+  ticketPrice?: number;
   canBook: boolean;
-  onBookClick?: (id: string) => void;
+  onBookClick?: (id: number) => void;
 }
 
 export function TrainCard(props: TrainCardProps) {
@@ -38,6 +40,10 @@ export function TrainCard(props: TrainCardProps) {
     onBookClick,
   } = props;
 
+  const parseDuration = useMemo(() => {
+    return DateTimeUtil.parseDuration(startTime, endTime);
+  }, [startTime, endTime]);
+
   return (
     <VStack border="1px" rounded="md" width="full" padding="8" spacing="6">
       <HStack width="full" justifyContent="space-between">
@@ -51,24 +57,32 @@ export function TrainCard(props: TrainCardProps) {
           </Text> */}
         </Box>
 
-        <Tag variant="outline" colorScheme="green" size="lg" fontWeight="bold">
-          ₹ {ticketPrice}
-        </Tag>
+        {ticketPrice && (
+          <Tag
+            variant="outline"
+            colorScheme="green"
+            size="lg"
+            fontWeight="bold"
+          >
+            ₹ {ticketPrice}
+          </Tag>
+        )}
       </HStack>
 
       <HStack width="full" justifyContent="space-between">
         <Box>
           <Heading fontSize="lg">{source}</Heading>
 
-          <Text color="brand.500" fontSize="xs" fontWeight="semibold">
-            {startTime}
-          </Text>
+          <HStack color="brand.500" fontSize="xs" fontWeight="semibold">
+            <Text>{DateTimeUtil.formatDate(startTime)}</Text>
+            <Text>{DateTimeUtil.formatTime(startTime)}</Text>
+          </HStack>
         </Box>
 
         <HStack flex={1} justifyContent="center">
           <Divider maxWidth="20" />
           <Text fontSize="xs" fontWeight="medium" color="subtle" marginX="2">
-            8h 25min
+            {parseDuration?.hours}h {parseDuration.minutes}min
           </Text>
           <Divider maxWidth="20" />
         </HStack>
@@ -76,9 +90,10 @@ export function TrainCard(props: TrainCardProps) {
         <Box>
           <Heading fontSize="lg">{destination}</Heading>
 
-          <Text color="brand.500" fontSize="xs" fontWeight="semibold">
-            {endTime}
-          </Text>
+          <HStack color="brand.500" fontSize="xs" fontWeight="semibold">
+            <Text>{DateTimeUtil.formatDate(endTime)}</Text>
+            <Text>{DateTimeUtil.formatTime(endTime)}</Text>
+          </HStack>
         </Box>
       </HStack>
 
@@ -107,7 +122,7 @@ export function TrainCard(props: TrainCardProps) {
             size="sm"
             variant="outline"
             onClick={() => {
-              if (onBookClick) onBookClick(id);
+              if (onBookClick && id) onBookClick(id);
             }}
           >
             Book Ticket

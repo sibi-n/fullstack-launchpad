@@ -1,4 +1,4 @@
-import { Train } from "types/train";
+import { BookingHistory, Train } from "types/train";
 import { Role } from "types/user";
 
 const apiBaseUrl = "http://localhost:8080";
@@ -66,6 +66,24 @@ export async function register(body: { username: string; password: string }) {
   );
 }
 
+export async function searchTrains(query: {
+  source: string;
+  destination: string;
+  date: string;
+}) {
+  return await catchError<Train[]>(
+    fetch(
+      `${apiBaseUrl}/trains/search?${new URLSearchParams(query).toString()}`,
+      {
+        headers: {
+          ...headers,
+          Authorization: fetchToken(),
+        },
+      }
+    )
+  );
+}
+
 export async function listTrains() {
   return await catchError<Train[]>(
     fetch(`${apiBaseUrl}/trains`, {
@@ -107,6 +125,34 @@ export async function deleteTrain(trainId: number) {
   return await catchError<Train[]>(
     fetch(`${apiBaseUrl}/trains/${trainId}`, {
       method: "DELETE",
+      headers: {
+        ...headers,
+        Authorization: fetchToken(),
+      },
+    })
+  );
+}
+
+export async function bookTicket(body: {
+  userId: number;
+  trainId: number;
+  seatCount: number;
+}) {
+  return await catchError<Train[]>(
+    fetch(`${apiBaseUrl}/bookings`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        ...headers,
+        Authorization: fetchToken(),
+      },
+    })
+  );
+}
+
+export async function listBookingHistory(userId: number) {
+  return await catchError<BookingHistory[]>(
+    fetch(`${apiBaseUrl}/bookings?userId=${userId}`, {
       headers: {
         ...headers,
         Authorization: fetchToken(),

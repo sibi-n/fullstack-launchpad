@@ -1,8 +1,33 @@
-import { Container, Heading, Text, VStack } from "@chakra-ui/react";
-import { TrainsData } from "assets";
+import { Container, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
+import { listBookingHistory } from "api";
 import { TrainCard } from "components/shared";
+import { useEffect, useState } from "react";
+import { useAuth } from "store";
+import { BookingHistory } from "types/train";
 
 export function BookingHistoryPage() {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [history, setHistory] = useState<BookingHistory[]>([]);
+
+  async function fetchHistory() {
+    if (!user?.userId) return;
+
+    setLoading(true);
+
+    const response = await listBookingHistory(user?.userId);
+
+    if (!response.error && response.data) {
+      setHistory(response.data);
+    }
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
   return (
     <Container maxWidth="4xl" paddingX="0">
       <Heading fontSize="2xl" marginTop="12">
@@ -14,18 +39,26 @@ export function BookingHistoryPage() {
       </Text>
 
       <VStack marginTop="8" spacing="8">
-        {TrainsData.map((e, index) => (
+        {loading && (
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        )}
+
+        {history.map((e, index) => (
           <TrainCard
             key={index}
-            id={e.id}
+            id={e.trainId}
             name={e.name}
             destination={e.destination}
             source={e.source}
             startTime={e.startTime}
             endTime={e.endTime}
-            totalSeats={e.totalSeats}
-            availableSeats={e.availableSeats}
-            ticketPrice={e.ticketPrice}
+            totalSeats={e.seatCount}
             canBook={false}
           />
         ))}

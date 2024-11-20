@@ -48,7 +48,7 @@ export function Nav() {
 
         {!user?.isAdmin && (
           <HStack spacing="10">
-            <Link as={RouterLink} fontWeight="medium" children="Home" to="/" />
+            {/* <Link as={RouterLink} fontWeight="medium" children="Home" to="/" /> */}
             <Link
               as={RouterLink}
               fontWeight="medium"

@@ -19,8 +19,20 @@ const authContext = createContext<AuthInfo>({
   removeSession: () => {},
 });
 
+const getSession = () => {
+  const session = localStorage.getItem("user");
+
+  if (session) {
+    try {
+      return JSON.parse(session);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
 export function AuthProvider({ children }: React.PropsWithChildren) {
-  const [user, setUser] = useState<UserInfo | undefined>();
+  const [user, setUser] = useState<UserInfo | undefined>(getSession());
 
   function setSession(e: Omit<UserInfo, "isAdmin">) {
     setUser({ ...e, isAdmin: e.role === "ADMIN" });
@@ -35,15 +47,8 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   }
 
   useEffect(() => {
-    const session = localStorage.getItem("user");
-
-    if (session) {
-      try {
-        setSession(JSON.parse(session));
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    const session = getSession();
+    if (session) setSession(session);
   }, []);
 
   return (

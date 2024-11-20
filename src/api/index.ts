@@ -1,7 +1,8 @@
 import { BookingHistory, Train } from "types/train";
 import { Role } from "types/user";
 
-const apiBaseUrl = "http://localhost:8080";
+const apiBaseUrl =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
 
 function fetchToken() {
   return "Bearer " + localStorage.getItem("token");

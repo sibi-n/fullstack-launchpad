@@ -11,7 +11,7 @@ export function AuthLayout({ children }: React.PropsWithChildren) {
     if (user) {
       navigate("/app");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <Center minHeight="100dvh" background="gray.100">

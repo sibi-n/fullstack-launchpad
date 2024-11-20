@@ -124,7 +124,7 @@ export function TrainsPage() {
       endTime: formData?.endTime,
       totalSeats: +formData?.totalSeats,
       price: +formData?.price,
-      isActive: formData?.isActive == 1,
+      isActive: formData?.isActive,
     });
 
     if (response.error) {
@@ -315,7 +315,10 @@ export function TrainsPage() {
                 {!train && (
                   <>
                     <GridItem>
-                      <FormControl isInvalid={false} marginBottom="2">
+                      <FormControl
+                        isInvalid={submitted && !formData?.name}
+                        marginBottom="2"
+                      >
                         <FormLabel fontSize="sm">Name</FormLabel>
                         <Input
                           type="text"
@@ -323,12 +326,15 @@ export function TrainsPage() {
                           value={formData?.name}
                           onChange={(e) => onFormUpdate("name", e.target.value)}
                         />
-                        <FormErrorMessage>Name is required.</FormErrorMessage>
+                        <FormErrorMessage>Name is required</FormErrorMessage>
                       </FormControl>
                     </GridItem>
 
                     <GridItem>
-                      <FormControl isInvalid={false} marginBottom="2">
+                      <FormControl
+                        isInvalid={submitted && !formData?.price}
+                        marginBottom="2"
+                      >
                         <FormLabel fontSize="sm">Price</FormLabel>
                         <Input
                           type="number"
@@ -338,12 +344,15 @@ export function TrainsPage() {
                             onFormUpdate("price", e.target.value)
                           }
                         />
-                        <FormErrorMessage>Price is required.</FormErrorMessage>
+                        <FormErrorMessage>Price is required</FormErrorMessage>
                       </FormControl>
                     </GridItem>
 
                     <GridItem>
-                      <FormControl isInvalid={false} marginBottom="2">
+                      <FormControl
+                        isInvalid={submitted && !formData?.source}
+                        marginBottom="2"
+                      >
                         <FormLabel fontSize="sm">From</FormLabel>
                         <Input
                           type="text"
@@ -353,12 +362,15 @@ export function TrainsPage() {
                             onFormUpdate("source", e.target.value)
                           }
                         />
-                        <FormErrorMessage>From is required.</FormErrorMessage>
+                        <FormErrorMessage>From is required</FormErrorMessage>
                       </FormControl>
                     </GridItem>
 
                     <GridItem>
-                      <FormControl isInvalid={false} marginBottom="2">
+                      <FormControl
+                        isInvalid={submitted && !formData?.destination}
+                        marginBottom="2"
+                      >
                         <FormLabel fontSize="sm">To</FormLabel>
                         <Input
                           type="text"
@@ -368,14 +380,17 @@ export function TrainsPage() {
                             onFormUpdate("destination", e.target.value)
                           }
                         />
-                        <FormErrorMessage>To is required.</FormErrorMessage>
+                        <FormErrorMessage>To is required</FormErrorMessage>
                       </FormControl>
                     </GridItem>
                   </>
                 )}
 
                 <GridItem>
-                  <FormControl isInvalid={false} marginBottom="2">
+                  <FormControl
+                    isInvalid={submitted && !formData?.startTime}
+                    marginBottom="2"
+                  >
                     <FormLabel fontSize="sm">Departure Time</FormLabel>
                     <Input
                       type="datetime-local"
@@ -387,12 +402,15 @@ export function TrainsPage() {
                         onFormUpdate("startTime", e.target.value)
                       }
                     />
-                    <FormErrorMessage>Time is required.</FormErrorMessage>
+                    <FormErrorMessage>Time is required</FormErrorMessage>
                   </FormControl>
                 </GridItem>
 
                 <GridItem>
-                  <FormControl isInvalid={false} marginBottom="2">
+                  <FormControl
+                    isInvalid={submitted && !formData?.endTime}
+                    marginBottom="2"
+                  >
                     <FormLabel fontSize="sm">Arrival Time</FormLabel>
                     <Input
                       type="datetime-local"
@@ -402,12 +420,15 @@ export function TrainsPage() {
                       )}
                       onChange={(e) => onFormUpdate("endTime", e.target.value)}
                     />
-                    <FormErrorMessage>Time is required.</FormErrorMessage>
+                    <FormErrorMessage>Time is required</FormErrorMessage>
                   </FormControl>
                 </GridItem>
 
                 <GridItem>
-                  <FormControl isInvalid={false} marginBottom="2">
+                  <FormControl
+                    isInvalid={submitted && !formData?.totalSeats}
+                    marginBottom="2"
+                  >
                     <FormLabel fontSize="sm">Seat Count</FormLabel>
                     <Input
                       type="number"
@@ -417,7 +438,7 @@ export function TrainsPage() {
                         onFormUpdate("totalSeats", e.target.value)
                       }
                     />
-                    <FormErrorMessage>Count is required.</FormErrorMessage>
+                    <FormErrorMessage>Count is required</FormErrorMessage>
                   </FormControl>
                 </GridItem>
 
@@ -426,7 +447,7 @@ export function TrainsPage() {
                     <FormLabel fontSize="sm">Active</FormLabel>
                     <Switch
                       id="isActive"
-                      isChecked={formData?.isActive == 1}
+                      isChecked={formData?.isActive === 1}
                       onChange={(e) =>
                         onFormUpdate("isActive", e.target.checked)
                       }

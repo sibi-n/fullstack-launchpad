@@ -18,8 +18,9 @@ export class DateTimeUtil {
 
     const d = new Date(date);
 
-    return `${d.getFullYear()}-${
-      d.getMonth() + 1
-    }-${d.getDate()}T${d.getHours()}:${d.getMinutes()}`;
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${d
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
   }
 }
